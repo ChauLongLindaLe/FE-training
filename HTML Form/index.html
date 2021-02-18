@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Form - Task 1</title>
+</head>
+<body>
+    <div class="form">
+        <h1 id="title">Simple HTML 5 Form</h1>
+        <p id="description">Thank you for taking the time to help us improve the platform</p>
+        <form onsubmit="return validateForm()" method="POST" id="simple-html-form">
+            <div class="section">
+                <label for="name" id="name-label">Name</label>
+                <input type="text" name="" id="name" placeholder="Enter Name">
+            </div>
+
+            <div class="section">
+                <label for="email" id="email-label">Email</label>
+                <input type="email" name="" id="email" placeholder="Enter Email" onkeyup="validateEmail()">
+            </div>
+
+            <div class="section">
+                <label for="age" id="age-label">Age</label>
+                <input type="number" name="" id="age" placeholder="Enter Age" min="1" max="5">
+            </div>
+            <div class="section">
+                <label for="dropdown">Select Option</label>
+                <select name="" id="dropdown"  placeholder="Select Option">
+                    <option value="" aria-readonly="true" disabled>Select Option</option>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+            <div class="section rdoSelection">
+                <label class="rdoSelection-label"for="">Should I change the colour of this form?</label>
+                <input type="radio" name="" id="rdoDefinitely"><label for="">Definitely</label>
+                <input type="radio" name="" id="rdoMaybe"><label for="">Maybe</label>
+                <input type="radio" name="" id="rdoNo"><label for="">No</label>
+            </div>
+            <div class="section chkColours">
+                <label class="chkColours-label"for="">What colour is the background?</label>
+                <input type="checkbox" name="checkbox" id="" value="1"><label for="checkbox">Yellow Green</label>
+                <input type="checkbox" name="checkbox" id="" value="2"><label for="checkbox">Chartreuse</label>
+                <input type="checkbox" name="checkbox" id="" value="3"><label for="checkbox">Pale Green</label>
+                <input type="checkbox" name="checkbox" id="" value="4"><label for="checkbox">Olive Drab</label>
+                <input type="checkbox" name="checkbox" id="" value="5"><label for="checkbox">Medium Aqua Marine</label>
+            </div>
+            <div class="section">
+                <label for="additionalComments">Additional Comments</label>
+                <textarea name="additionalComments" id="additionalComments" cols="70" rows="10"></textarea>
+            </div>
+            <button class="btn" type="submit">Submit</button>
+        </form>
+    </div>
+    
+</body>
+<script>
+    var email = document.getElementById('email');
+
+    function validateForm(){
+        console.log('happy');
+    }
+    function validateEmail() {
+    console.log('Im working')
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+</script>
+</html>
