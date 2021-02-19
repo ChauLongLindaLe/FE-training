@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banking App</title>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/5d1f6e58db.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </head>
-<body>
-    <header>
-        <h1 class="title">Totally great banking</h1>
-    </header>
-    <div>
-        <button class="btn btn-success">Open Account</button>
+<body >
+    <div class="container m-4">
+        <header class="d-flex justify-content-between">
+            <div class="avatar-icon-wrapper">
+                <img class="avatar" src="http://static.hudl.com/users/prod/5396331_c0c08c570daf469288760e2909c8e8e3.jpg" alt="icon" srcset="">
+            </div>
+            <div class="ellipsis-wrapper"><i class="fas fa-ellipsis-v"></i></div>
+        </header>
+        <div class="welcome-text mt-4">
+            <h3>Hi, Alex 👋</h3>
+            <h2 class="font-weight-bold">Welcome back!</h2>
+    
+        </div>
+        <div>
+              <div class="input-container">
+                    <i class="fas fa-search"></i>
+                    <input class="input-field" type="text" placeholder="Search" name="search">
+                </div>
+            <button class="btn btn-success">Open Account</button>
+        </div>
     </div>
 </body>
 </html>
