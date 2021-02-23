@@ -5,9 +5,12 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-rl.question('What do you think of Node.js? ', (answer) => {
-  // TODO: Log the answer in a database
-  console.log(`Thank you for your valuable feedback: ${answer}`);
+var userInput = []
+
+rl.question('Input a string of nine unique numbers ', (answer) => {
+  // take string of numbers and turn into array of numbers
+  userInput = answer.split('').map(Number);
+  console.log(userInput);
 
   rl.close();
 });
