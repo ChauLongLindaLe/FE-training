@@ -36,6 +36,7 @@ const matrixSumDiagonals = function(matrix) {
 }
 
 function calcWinner() {
+  const allEqual = arr => arr.every(val => val === arr[0]);
   allSums = rowSums.concat(columnSums, diagonalSums);
   return allEqual(allSums) ? console.log('Congratulations! You win!') : console.log('Boo, try again');
 }
