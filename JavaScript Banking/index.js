@@ -5,36 +5,24 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+// TODO:Concurrent transactions and what happens when there isn't enough money
+
 function Account(accName, balance, state){
-    this.transations = [];
     this.balance = balance;
     this.accName = accName;
     this.state = state;
     this.withdraw = function(amount){
         this.balance -= amount
-        this.transations.push({
-            type: "withdrawl",
-            amount: amount,
-        })
     }
     this.deposit = function(amount){
         this.balance += amount
-        this.transations.push({
-            type: "deposit",
-            amount: amount,
-        })
     }
     this.debit = function(amount){
         this.balance -= amount
-        this.transations.push({
-            type: "debit",
-            amount: amount,
-        })
     }
     this.closeAcc= function(){
         this.balance = 0;
         this.status = closed;
-        this.transations = [];
         console.log('\n You account is now closed. Please don\'t read the small print')
         rl.close();
     }
@@ -73,30 +61,34 @@ function deposit(acc){
         })
     })
 }
+function enoughMoney(currentBalance,value){
+    currentBalance >= value ? currentBalance -=value : console.log('Whops not enough money. Try again. Is being poor infectious?');
+    console.log(currentBalance)
+}
 function shopping(acc){
     rl.question(`\n Interested in insurance? We sell all sorts here. \n 1) House insurance - 300Dubloons \n 2) Mortgage - 250Dubloons \n 3) Keychain - 3Dubloons \n 4) Return to main menu `, function(itemPurchased){
         switch(itemPurchased){
         case "1":
-            acc.debit(300)
-            console.log(`\n House is safe now - Balance is now ${acc.balance} \n`);
+            enoughMoney(acc.balance,300);
+            console.log(`\n The roof , the roof, the roof is on fire - I at least hope not \n`);
             break;
         case "2":
-            acc.debit(250)
-            console.log(`\n Mortgages are your friends - Balance is now ${acc.balance} \n`);
+            enoughMoney(acc, 250);
+            console.log(`\n Mortgages are your friends \n`);
             break;
         case "3":
-            acc.debit(3)
-            console.log(`\n Keychain is yours! - Balance is now ${acc.balance} \n`);
+            enoughMoney(acc, 3);
+            console.log(`\n Keychains are shiny \n`);
             break;
         case "4":
             mainMenu(acc);
             break;
         default:
-         console.log("That's not valid")
-         rl.close();
+         console.log("That's not valid");
+         shopping(acc);
      } 
-        rl.question(`\n Balance is now: ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
-            userInput === '1' ? acc.closeAcc(acc) : rl.close();
+        rl.question(`\n  Balance is ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
+            userInput === '1' ? mainMenu(acc) : rl.close();
         })
         
     })
