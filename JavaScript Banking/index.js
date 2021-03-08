@@ -5,24 +5,24 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-// TODO:Concurrent transactions and what happens when there isn't enough money
+// TODO: Concurrent transactions
 
-function Account(accName, balance, state){
+function Account(accName, balance, status){
     this.balance = balance;
     this.accName = accName;
-    this.state = state;
-    this.withdraw = function(amount){
-        this.balance -= amount
-    }
+    this.status = 'open';
+    // this.withdraw = function(amount){
+    //     this.balance -= amount
+    // }
     this.deposit = function(amount){
         this.balance += amount
     }
-    this.debit = function(amount){
-        this.balance -= amount
-    }
+    // this.debit = function(amount){
+    //     this.balance -= amount
+    // }
     this.closeAcc= function(){
         this.balance = 0;
-        this.status = closed;
+        this.status = 'closed';
         console.log('\n You account is now closed. Please don\'t read the small print')
         rl.close();
     }
@@ -46,8 +46,8 @@ function openNewAccount(){
 
 function withdraw(acc){
     rl.question(`\n Your current balance is ${acc.balance} Dubloons. How much would you like to withdraw today?`, function(withdrawAmount){
-        acc.withdraw(Number(withdrawAmount));
-         rl.question(`\n Balance is now: ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
+        enoughMoney(acc.balance,Number(withdrawAmount));
+         rl.question(`\n Balance: ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
             userInput === '1' ? mainMenu(acc) : rl.close();
         })
     })
@@ -56,15 +56,16 @@ function withdraw(acc){
 function deposit(acc){
     rl.question(`\n Your current balance is ${acc.balance} Dubloons. How much would you like to deposit today?  `, function(depositAmount){
         acc.deposit(Number(depositAmount));
-        rl.question(`Balance is now: ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
+        rl.question(`Balance: ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
             userInput === '1' ? mainMenu(acc) : rl.close();
         })
     })
 }
 function enoughMoney(currentBalance,value){
     currentBalance >= value ? currentBalance -=value : console.log('Whops not enough money. Try again. Is being poor infectious?');
-    console.log(currentBalance)
+    console.log(currentBalance);
 }
+
 function shopping(acc){
     rl.question(`\n Interested in insurance? We sell all sorts here. \n 1) House insurance - 300Dubloons \n 2) Mortgage - 250Dubloons \n 3) Keychain - 3Dubloons \n 4) Return to main menu `, function(itemPurchased){
         switch(itemPurchased){
@@ -96,13 +97,13 @@ function shopping(acc){
 
 function closeAcc(acc){
         rl.question(`\n Are you sure you want to close your account? \n 1) Yes \n 2) return to main menu  `, function(userInput){
-        userInput === '1' ? closeAcc(acc) : mainMenu(acc);
+        userInput === '1' ? acc.closeAcc(acc) : mainMenu(acc);
     })
 }
 
 function mainMenu(acc){
     if(acc){
-        rl.question("\n ~~~ Predatory Bank! ~~~  \nWhen you can't borrow money from your family~! \n What would you like do today?  \n 1) Withdraw money \n 2) Deposit money \n 3) Buy Insurance \n 4) Close Account \n 5) Leave  ", function(userInput){
+        rl.question("\n ~~~ Predatory Bank! ~~~  \n When you can't borrow money from your family~! \n What would you like do today?  \n 1) Withdraw money \n 2) Deposit money \n 3) Buy Insurance \n 4) Close Account \n 5) Leave  ", function(userInput){
          switch(userInput){
             case "1":
                 withdraw(acc);
@@ -145,4 +146,4 @@ const functions ={
     add: (num1,num2,) => num1 + num2,
 }
 
-module.exports = functions;
+module.exports = {functions, Account};
