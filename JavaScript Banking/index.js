@@ -31,10 +31,9 @@ function Account(accName, balance, status){
 function openNewAccount(){
     rl.question("\n What is it that you like to be called?   ", function(name){
         rl.question(`\n Welcome, ${name}. Please enter an opening amount in Dubloons ( minimum of 200):    `, function(openingBalance){
-            if(openingBalance > 199){
+            if(openingBalance >= 200){
                 let acc = new Account(name, Number(openingBalance, 'active'));
-                acc.balance -= 99;
-                console.log(`\n Congratulations on your new account! We have deducated our incredibly humble fee. Your balance is ${acc.balance} dubloons `)
+                console.log(`\n Congratulations on your new account! Your balance is ${acc.balance} dubloons `)
                 mainMenu(acc)
             } else{
                 console.log('\n cheap much? try again');
@@ -46,7 +45,7 @@ function openNewAccount(){
 
 function withdraw(acc){
     rl.question(`\n Your current balance is ${acc.balance} Dubloons. How much would you like to withdraw today?`, function(withdrawAmount){
-        enoughMoney(acc.balance,Number(withdrawAmount));
+        enoughMoney(acc,Number(withdrawAmount));
          rl.question(`\n Balance: ${acc.balance} Return to main menu? \n 1) Yes - return to main menu \n 2) Leave  `, function(userInput){
             userInput === '1' ? mainMenu(acc) : rl.close();
         })
@@ -61,16 +60,21 @@ function deposit(acc){
         })
     })
 }
-function enoughMoney(currentBalance,value){
-    currentBalance >= value ? currentBalance -=value : console.log('Whops not enough money. Try again. Is being poor infectious?');
-    console.log(currentBalance);
+function enoughMoney(account,value){
+   if(account.balance >= value){
+    account.balance -=value
+    return true;
+   } else{
+    console.log('Whops not enough money. Try again. Is being poor infectious?');
+    return false;
+   } 
 }
 
 function shopping(acc){
     rl.question(`\n Interested in insurance? We sell all sorts here. \n 1) House insurance - 300Dubloons \n 2) Mortgage - 250Dubloons \n 3) Keychain - 3Dubloons \n 4) Return to main menu `, function(itemPurchased){
         switch(itemPurchased){
         case "1":
-            enoughMoney(acc.balance,300);
+            enoughMoney(acc,300);
             console.log(`\n The roof , the roof, the roof is on fire - I at least hope not \n`);
             break;
         case "2":
@@ -135,8 +139,8 @@ rl.on("close", function() {
     process.exit(0);
 });
 rl.on('SIGINT', () => {
-  rl.question('Are you sure you want to exit? ', (answer) => {
-    if (answer.match(/^y(es)?$/i)) rl.pause();
+  rl.question('Are you sure you want to exit? Enter y or yes to exit', (answer) => {
+    if (answer.match(/^y(es)?$/i)) rl.close();
   });
 });
 
@@ -146,4 +150,4 @@ const functions ={
     add: (num1,num2,) => num1 + num2,
 }
 
-module.exports = {functions, Account};
+module.exports = {functions, Account , enoughMoney};
