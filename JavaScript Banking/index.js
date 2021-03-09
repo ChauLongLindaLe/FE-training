@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 function Account(accName, balance, status){
     this.balance = balance;
     this.accName = accName;
-    this.status = 'open';
+    this.status = status;
     // this.withdraw = function(amount){
     //     this.balance -= amount
     // }
@@ -122,32 +122,22 @@ function mainMenu(acc){
                 closeAcc(acc);
                 break;
             default:
-             console.log("That's not valid")
+             console.log("\n ~ Take your money elsewhere ~ \n")
              rl.close();
          } 
         });
     } else{
         rl.question("\n ~~~ Predatory Bank! ~~~  \nWhen you can't borrow money from your family~! \n What would you like do today? \n 1) Open an account \n 2) Leave  ", function(userInput){
-            userInput === '1' ? openNewAccount() : rl.close;
+            userInput === '1' ? openNewAccount() : rl.close();
         })
     };
 }
-
-
-rl.on("close", function() {
-    console.log("\n ~ Take your money elsewhere ~ \n");
-    process.exit(0);
-});
 rl.on('SIGINT', () => {
   rl.question('Are you sure you want to exit? Enter y or yes to exit', (answer) => {
-    if (answer.match(/^y(es)?$/i)) rl.close();
+    if (answer.match(/^y(es)?$/i)) process.exit(0);
   });
 });
 
 mainMenu();
 
-const functions ={
-    add: (num1,num2,) => num1 + num2,
-}
-
-module.exports = {functions, Account , enoughMoney};
+module.exports = {Account, enoughMoney};

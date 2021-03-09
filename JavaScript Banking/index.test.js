@@ -1,30 +1,36 @@
-const { expect } = require('@jest/globals');
-const {functions, Account , enoughMoney} = require('./index');
+const { expect, test } = require('@jest/globals');
+const { Account , enoughMoney} = require('./index');
 
-test('Adds 2+2 to equal 4', () =>{
-    expect(functions.add(2,2)).toBe(4);
-})
+const acc = new Account('Linda', 200 , 'open');
+
+
+// Unable to mock readline so have taken the object constructor out
 
 test('new Account is created', () => {
-  const acc = new Account('Linda', 200 , 'open');
   expect(acc.accName).toBe('Linda');
   expect(acc.balance).toBe(200);
   expect(acc.status).toBe('open');
 });
 
 test('Withdraw no money if there are insufficient funds', () => {
-    const acc = new Account('Linda', 200 , 'open');
     const withdrawlAmount = 300;
-    expect(enoughMoney(acc.balance, withdrawlAmount)).toBeFalsy();
+    expect(enoughMoney(acc, withdrawlAmount)).toBeFalsy();
     expect(acc.balance).toEqual(acc.balance);
 })
 
-test('Withdraw money if sufficient funds', () => {
-    const acc = new Account('Linda', 600 , 'open');
+test('Withdraw money if sufficient funds leaving balance at 300', () => {
+    const newAcc = new Account('Wealthy Linda', 600 , 'open');
     const withdrawlAmount = 300;
-    expect(enoughMoney(acc,withdrawlAmount)).toBeTruthy();
-    expect(acc.balance).toEqual(300);
+    expect(enoughMoney(newAcc,withdrawlAmount)).toBeTruthy();
+    expect(newAcc.balance).toEqual(300);
 })
 
+test('Deposit 300 into account. Balance should equal 500 ', () => {
+    acc.deposit(300)
+    expect(acc.balance).toEqual(500);
+})
 
-// Deposit, close account 
+test('Account status should be closed', () => {
+    acc.closeAcc()
+    expect(acc.status).toEqual('closed');
+})
